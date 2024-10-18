@@ -1,0 +1,45 @@
+[build-system]
+requires = ["setuptools >= 61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "databootstrap"
+version = "1.0.0"
+authors = [
+  { name="Jon Guerin", email="info@databootstrap.com" },
+]
+description = 'SDK for the Data Bootstrap API'
+readme = 'README.md'
+requires-python = '>=3.8'
+dependencies = [
+  "pydantic",
+  "requests"
+]
+
+classifiers = [
+    'Development Status :: 3 - Alpha',
+    'Programming Language :: Python :: 3',
+    'Programming Language :: Python :: 3.8',
+    'Programming Language :: Python :: 3.9',
+    'Programming Language :: Python :: 3.10',
+    'Programming Language :: Python :: 3.11',
+    'Programming Language :: Python :: 3.12',
+    'Operating System :: OS Independent',
+    'Intended Audience :: Developers',
+    'Intended Audience :: Information Technology',
+    'Intended Audience :: System Administrators',
+    "License :: OSI Approved :: MIT License",
+    'Typing :: Typed',
+    'Topic :: Software Development :: Libraries :: Python Modules',
+]
+
+[project.urls]
+'Homepage' = 'https://databootstrap.com'
+'Bug Tracker' = 'https://github.com/databootstrap-ai/dbs-sdk-python/issues'
+'Source' = 'https://github.com/databootstrap-ai/dbs-sdk-python'
+'Download' = 'https://github.com/databootstrap-ai/dbs-sdk-python/#files'
+
+[tool.pytest.ini_options]
+addopts = [
+    "--import-mode=importlib",
+]
