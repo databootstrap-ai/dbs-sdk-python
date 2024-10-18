@@ -24,6 +24,20 @@ class ChatResponse(CamelModel):
     answer: str
     sources: List[SourceDetails]
 
+
+class SearchRequest(CamelModel):
+    bucket_path: str
+    query: str
+
+class SearchResult(CamelModel):
+    url: str
+    relevant_text: str
+    title: Optional[str]
+    author: Optional[str]
+
+class SearchResponse(CamelModel):
+    search_results: List[SearchResult]
+
 class DataBootstrap():
     def __init__(self, token: str, api_url: str=DEFAULT_API_URL):
         self.latest_token = token  # this is the refresh token
@@ -56,7 +70,6 @@ class DataBootstrap():
                 query=query,
                 from_suggestion=from_suggestion
             )
-            logger.info("making chat request")
             response = requests.post(url, headers=headers, json=request_data.model_dump())
             response.raise_for_status()
             
@@ -64,3 +77,23 @@ class DataBootstrap():
         except requests.RequestException as e:
             logger.exception(f"Error in chat query {url}")
             raise Exception("Error in chat query") from e
+
+    def search_query(self, bucket_path: str, query: str) -> List[SearchResult]:
+        url = f"{self._api_url}/search_query"
+        try:
+            headers = {
+                'Content-Type': 'application/json',
+                **self._get_authorization_header()
+            }
+            
+            request_data = SearchRequest(
+                bucket_path=bucket_path,
+                query=query,
+            )
+            response = requests.post(url, headers=headers, json=request_data.model_dump())
+            response.raise_for_status()
+            
+            return SearchResponse.model_validate_json(response.text).search_results
+        except requests.RequestException as e:
+            logger.exception(f"Error in search query {url}")
+            raise Exception("Error in search query") from e
