@@ -1,7 +1,11 @@
-from databootstrap import DataBootstrap
+from databootstrap import DataBootstrap, create_token
+from dotenv import load_dotenv
+import os
 
+load_dotenv()
 
 def test_chat():
-    dbs = DataBootstrap(email="", password="")
-    res = dbs.chat_query("biorxiv","<question>")
+    token = create_token(email=os.getenv('DBS_API_EMAIL'), password=os.getenv('DBS_API_PASSWORD'), api_url=os.getenv('DBS_API_URL'))
+    dbs = DataBootstrap(token=token, api_url=os.getenv('DBS_API_URL'))
+    res = dbs.chat_query("nd","summarize the declaration of independence")
     print(str(res))

@@ -1,15 +1,12 @@
 from databootstrap.camel_model import CamelModel
 import requests
 from datetime import datetime, timedelta
-from urllib.parse import urlencode
 import logging
 from typing import List, Optional
-
-DEFAULT_API_URL = 'https://databootstrap.com/api'
+from databootstrap.constants import DEFAULT_API_URL
+from databootstrap.auth import refresh_token, Token
 
 logger = logging.getLogger(__name__)
-
-
 
 class ChatRequest(CamelModel):
     bucket_path: str
@@ -28,65 +25,26 @@ class ChatResponse(CamelModel):
     sources: List[SourceDetails]
 
 class DataBootstrap():
-    def __init__(self, email, password, api_url=DEFAULT_API_URL):
-        self._backend_base = api_url
-        self._email = email 
-        self._password = password
-        self._token = ""
-        self._refresh_token = ""
-        self._expiration = None
-
-    def _set_tokens(self, token: str, refresh_token: str, expire_minutes: int):
-        self._token = token 
-        self._refresh_token = refresh_token
-        self._expiration = datetime.now() + timedelta(minutes=expire_minutes)
-
-    def _login(self):
-        url = f"{self._backend_base}/auth/login"
-        try:
-            headers = {'Content-Type': 'application/x-www-form-urlencoded'}
-            data = urlencode({
-                'username': self._email,
-                'password': self._password
-            })
-            
-            response = requests.post(url, headers=headers, data=data)
-            response.raise_for_status()
-            
-            data = response.json()
-            self._set_tokens(data['accessToken'], data['refreshToken'], data['expireMinutes'])
-        except requests.RequestException:
-            logger.exception(f"Error calling {url}")
-            raise
+    def __init__(self, token: str, api_url: str=DEFAULT_API_URL):
+        self.latest_token = token  # this is the refresh token
+        self._api_url = api_url
+        self._token_info: Token = None
+        self._expiration = datetime.now()
 
     def _refresh_token(self):
-        url = f"{self._backend_base}/auth/refresh_token"
-        try:
-            headers = {'Authorization': f'Bearer {self._refresh_token}'}
-            
-            response = requests.post(url, headers=headers)
-            response.raise_for_status()
-            
-            data = response.json()
-            self._set_tokens(data['accessToken'], data['refreshToken'], data['expireMinutes'])
-        except requests.RequestException:
-            logger.exception("Error calling {url}")
-            self._token = ""
-            self._refresh_token = ""
-            self._expiration = None
-            raise
+        self._token_info = refresh_token(self._api_url, self.latest_token)
+        self.latest_token = self._token_info.refresh_token
+        self._expiration = datetime.now() + timedelta(minutes=self._token_info.expire_minutes)
 
     def _get_authorization_header(self):
-        if self._expiration is None:
-            self._login()
-        elif self._expiration and datetime.now() >= self._expiration:
+        if self._token_info is None or datetime.now() >= self._expiration:
             self._refresh_token()
  
-        return {'Authorization': f'Bearer {self._token}'}
+        return {'Authorization': f'Bearer {self._token_info.access_token}'}
 
 
     def chat_query(self, bucket_path: str, query: str, from_suggestion: bool = False) -> ChatResponse:
-        url = f"{self._backend_base}/chat_query"
+        url = f"{self._api_url}/chat_query"
         try:
             headers = {
                 'Content-Type': 'application/json',
