@@ -49,7 +49,7 @@ dbs.latest_token
 ```python
 # Select the bucket you want to chat with
 bucket_path = "biorxiv"
-my_statement = "lorem ipsum"
+my_statement = "diabetes"
 response = dbs.chat_query(bucket_path, my_statement)
 
 print(response.answer)
@@ -62,7 +62,7 @@ print(str(response.sources))
 ```python
 # Select the bucket you want to chat with
 bucket_path = "biorxiv"
-my_search = "lorem ipsum"
+my_search = "cancer"
 search_results = dbs.search_query(bucket_path, my_search)
 
 for result in search_results:
