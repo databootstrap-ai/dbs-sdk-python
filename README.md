@@ -51,8 +51,8 @@ dbs.latest_token
 ```python
 # Select the vertical you want to chat with
 vertical = "biorxiv"
-my_statement = "diabetes"
-response = dbs.chat_query(vertical, my_statement)
+query = "diabetes"
+response = dbs.chat_query(vertical, query)
 
 print(response.answer)
 print(str(response.sources))
@@ -64,8 +64,8 @@ print(str(response.sources))
 ```python
 # Select the vertical you want to chat with
 vertical = "biorxiv"
-my_search = "cancer"
-search_results = dbs.search_query(vertical, my_search)
+query = "cancer"
+search_results = dbs.search_query(vertical, query)
 
 for result in search_results:
     print(str(result))
