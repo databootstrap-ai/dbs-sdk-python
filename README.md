@@ -49,10 +49,10 @@ dbs.latest_token
 ## Chat
 
 ```python
-# Select the bucket you want to chat with
-bucket_path = "biorxiv"
+# Select the vertical you want to chat with
+vertical = "biorxiv"
 my_statement = "diabetes"
-response = dbs.chat_query(bucket_path, my_statement)
+response = dbs.chat_query(vertical, my_statement)
 
 print(response.answer)
 print(str(response.sources))
@@ -62,10 +62,10 @@ print(str(response.sources))
 ## Search
 
 ```python
-# Select the bucket you want to chat with
-bucket_path = "biorxiv"
+# Select the vertical you want to chat with
+vertical = "biorxiv"
 my_search = "cancer"
-search_results = dbs.search_query(bucket_path, my_search)
+search_results = dbs.search_query(vertical, my_search)
 
 for result in search_results:
     print(str(result))
