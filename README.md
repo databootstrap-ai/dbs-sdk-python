@@ -4,7 +4,7 @@ Welcome to [Data Bootstrap](https://databootstrap.com/).
 
 ## Install
 
-`cd` to your dbs-sdk-python directory and install the library.
+Download this repository and `cd` to the dbs-sdk-python directory to install the library.
 
 You can also consider creating a virtual env for this project.
 
