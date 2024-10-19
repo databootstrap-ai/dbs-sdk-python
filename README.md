@@ -1,5 +1,17 @@
 # Data Bootstrap Python SDK
 
+## Install
+
+`cd` to your dbs-sdk-python directory and install the library.
+
+You can also consider creating a virtual env for this project.
+
+`python3 -m venv .dbs-sdk` and `source .dbs-sdk/bin/activate` 
+
+```python
+pip install .
+```
+
 ## Get a Token
 
 ```python 
