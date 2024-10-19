@@ -1,13 +1,23 @@
 # Data Bootstrap Python SDK
 
-## Tokens
+## Get a Token
 
 ```python 
-from databootstrap import create_token, DataBootstrap
+from databootstrap import create_token
 
 # Give your credentials created on the website to get a token to use for the api
 # You can save this token to use, but it will expire.  This can be refreshed.
 token = create_token(email="me@corp.com",password="123")
+
+print(token)
+```
+
+Please save this token.
+
+## Use the Token to establish a connection
+
+```python 
+from databootstrap import DataBootstrap
 
 # create the api
 dbs = DataBootstrap(token)
