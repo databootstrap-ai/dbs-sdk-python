@@ -15,7 +15,7 @@ class ChatRequest(CamelModel):
 
 class SourceDetails(CamelModel):
     url: str
-    author: str
+    author: Optional[str]
     title: str
     tip_url: Optional[str] = None
 
