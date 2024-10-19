@@ -64,7 +64,7 @@ print(str(response.sources))
 ```python
 # Select the vertical you want to search.
 vertical = "biorxiv"
-query = "autophagy"
+query = "What is autophagy?"
 search_results = dbs.search_query(vertical, query)
 
 for result in search_results:
