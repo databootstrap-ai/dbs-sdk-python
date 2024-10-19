@@ -6,7 +6,12 @@
 
 You can also consider creating a virtual env for this project.
 
-`python3 -m venv .dbs-sdk` and `source .dbs-sdk/bin/activate` 
+```shell
+python3 -m venv .dbs-sdk
+source .dbs-sdk/bin/activate
+```
+
+Now, for the sdk install.
 
 ```python
 pip install .
