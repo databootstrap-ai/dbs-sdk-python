@@ -24,7 +24,7 @@ pip install .
 ```python 
 from databootstrap import create_token
 
-# Give your credentials created on the website to get a token to use for the api
+# Give your credentials created on the website to get a token to use for the api.
 # You can save this token to use, but it will expire.  This can be refreshed.
 token = create_token(email="me@corp.com",password="123")
 
@@ -41,15 +41,15 @@ from databootstrap import DataBootstrap
 # create the api
 dbs = DataBootstrap(token)
 
-# Tokens are automatically rotated as you use the api
-# You can save the latest token with an extended expiration 
+# Tokens are automatically rotated as you use the api.
+# You can save the latest token with an extended expiration. 
 dbs.latest_token
 ```
 
 ## Chat
 
 ```python
-# Select the vertical you want to chat with
+# Select the vertical you want to chat with.
 vertical = "biorxiv"
 query = "diabetes"
 response = dbs.chat_query(vertical, query)
@@ -62,7 +62,7 @@ print(str(response.sources))
 ## Search
 
 ```python
-# Select the vertical you want to chat with
+# Select the vertical you want to search.
 vertical = "biorxiv"
 query = "cancer"
 search_results = dbs.search_query(vertical, query)
